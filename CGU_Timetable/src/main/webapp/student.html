@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Panel</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+  .timetable {
+    margin-top: 20px;
+    display: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  th {
+    background-color: #007bff; /* Blue background */
+    color: white;              /* White text */
+  }
+  .btn {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+</style>
+
+</head>
+<body>
+  <div class="header">
+    <img src="cgu_logo.png" alt="CGU Logo" class="logo" />
+    <h1 class="welcome-text">Welcome to Student Page</h1>
+  </div>
+
+  <div class="container">
+    <h2>Search Timetable by Section</h2>
+    <input type="text" id="sectionInput" placeholder="Enter Section" />
+    <button class="btn" onclick="fetchTimetable()">Search</button>
+
+    <div class="timetable" id="timetableBox">
+      <h3>Timetable</h3>
+      <div id="timetableContent">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    function fetchTimetable() {
+      const section = document.getElementById("sectionInput").value;
+      const timetableBox = document.getElementById("timetableBox");
+      const content = document.getElementById("timetableContent");
+
+      if (!section) {
+        alert("Please enter a section");
+        return;
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "SearchTimetableServlet", true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.onload = function () {
+        timetableBox.style.display = "block";
+        if (xhr.status === 200) {
+          content.innerHTML = xhr.responseText;
+        } else {
+          content.innerHTML = "❌ Failed to load timetable.";
+        }
+      };
+
+      xhr.send("section=" + encodeURIComponent(section));
+    }
+  </script>
+</body>
+</html>

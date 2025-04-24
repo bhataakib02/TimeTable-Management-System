@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Timetable Entry - CGU</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: white;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    header h1 {
+      margin: 0 auto;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .form-row {
+      margin-bottom: 10px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: purple;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: darkmagenta;
+    }
+
+    #msgBox {
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .action-btn {
+      padding: 6px 10px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: orange;
+      color: white;
+      border: none;
+    }
+
+    .delete-btn {
+      background-color: red;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="cgu_logo.png" alt="CGU Logo" />
+    <h1>Add Timetable Entry</h1>
+  </header>
+
+  <div class="container">
+    <h2>Add New Timetable Entry</h2>
+    <form action="AddTimetableServlet" method="post">
+      <div class="form-row">
+        <input type="text" name="courseCode" placeholder="Course Code" required />
+        <input type="text" name="facultyName" placeholder="Faculty Name" required />
+        <input type="text" name="roomNumber" placeholder="Room Number" required />
+      </div>
+      <div class="form-row">
+        <input type="text" name="section" placeholder="Section" required />
+        <select name="day" required>
+          <option value="">Select Day</option>
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+        </select>
+        <input type="text" name="time" placeholder="e.g. 10:00 AM - 11:00 AM" required />
+        <button type="submit">➕ Add Entry</button>
+      </div>
+    </form>
+
+    <div id="msgBox"></div>
+
+    <hr>
+
+    <h2>Search Timetable by Faculty Name</h2>
+    <form action="SearchFacultyTimetableServlet" method="get">
+      <input type="text" name="facultyName" placeholder="Enter Faculty Name" required />
+      <button type="submit">🔍 Search</button>
+    </form>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const msg = params.get("message");
+    const msgBox = document.getElementById("msgBox");
+
+    if (msg === "success") {
+      msgBox.style.color = "green";
+      msgBox.innerText = "✅ Timetable entry added successfully!";
+    } else if (msg === "error") {
+      msgBox.style.color = "red";
+      msgBox.innerText = "❌ Failed to add timetable entry.";
+    } else if (msg === "updated") {
+      msgBox.style.color = "green";
+      msgBox.innerText = "✅ Entry updated successfully.";
+    } else if (msg === "deleted") {
+      msgBox.style.color = "red";
+      msgBox.innerText = "🗑️ Entry deleted.";
+    }
+  </script>
+
+</body>
+</html>

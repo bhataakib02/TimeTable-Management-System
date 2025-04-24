@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Course - CGU</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .message {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+    }
+    .success { background-color: #d4edda; color: #155724; }
+    .error { background-color: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="cgu_logo.png" alt="CGU Logo" class="logo" />
+    <h1 class="welcome-text">Add Course</h1>
+  </div>
+
+  <div class="container">
+    <h2>Add New Course</h2>
+
+    <form id="courseForm">
+      <div class="form-group">
+        <label for="courseCode">Course Code:</label><br />
+        <input type="text" id="courseCode" name="courseCode" required />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="courseName">Course Name:</label><br />
+        <input type="text" id="courseName" name="courseName" required />
+      </div>
+      <br />
+      <!-- Changed type="submit" to type="button" -->
+      <button type="submit" class="btn">Add Course</button>
+      
+    </form>
+
+    <div class="buttons" style="margin-top: 20px;">
+      <a href="admin.html" class="btn">Back to Admin</a>
+      <a href="index.html" class="btn">Home</a>
+    </div>
+
+    <div id="message" class="message"></div>
+  </div>
+
+<script>
+  document.getElementById('courseForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // ✅ This stops the page reload!
+
+    const courseCode = document.getElementById('courseCode').value;
+    const courseName = document.getElementById('courseName').value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'AddCourseServlet', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+      const messageBox = document.getElementById('message');
+      messageBox.style.display = 'block';
+      if (xhr.status === 200) {
+        if (xhr.responseText.includes("successfully")) {
+          messageBox.className = 'message success';
+        } else {
+          messageBox.className = 'message error';
+        }
+        messageBox.innerHTML = xhr.responseText;
+      } else {
+        messageBox.className = 'message error';
+        messageBox.innerHTML = "❌ Error: Server issue!";
+      }
+    };
+
+    xhr.send(`courseCode=${encodeURIComponent(courseCode)}&courseName=${encodeURIComponent(courseName)}`);
+  });
+</script>
+
+ 
+</body>
+</html>

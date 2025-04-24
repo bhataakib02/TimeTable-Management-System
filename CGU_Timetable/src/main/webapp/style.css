@@ -1,0 +1,141 @@
+/* General Styles */
+/* Remove general background from body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px; /* Header ka space fix */
+    background: white; /* Default white background for all pages */
+}
+
+/* ✅ Index Page Background Only */
+.index-page {
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Header (Logo + Welcome Msg) */
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.welcome-text {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center; 
+    flex-grow: 1;
+    margin-left: 80px;
+}
+
+/* Logo */
+.logo {
+    width: 70px;
+    height: auto;
+    object-fit: contain;
+   
+    left: 20px;  /* Logo left side pe fix */
+}
+
+/* Welcome Message */
+.welcome-msg {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0 auto;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* Fixing Overlapping Issue */
+body {
+    padding-top: 60px; /* Header ka height jitna space */
+}
+
+/* Main Content Box */
+.container {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 800px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 120px; /* Space adjustment */
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    background: #ff6600;
+    color: white;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #cc5200;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background: #0073e6;
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  display: none;
+  font-weight: bold;
+}
+.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.message {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 16px;
+}
+

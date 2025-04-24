@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Room - CGU</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .message {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+    }
+    .success { background-color: #d4edda; color: #155724; }
+    .error { background-color: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="cgu_logo.png" alt="CGU Logo" class="logo" />
+    <h1 class="welcome-text">Add Room</h1>
+  </div>
+
+  <div class="container">
+    <h2>Add New Room</h2>
+
+   <form id="roomForm">
+      <div class="form-group">
+        <label for="roomNumber">Room Number:</label><br />
+        <input type="text" id="roomNumber" name="roomNumber" required />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="roomType">Room Type:</label><br />
+        <select id="roomType" name="roomType" required>
+          <option value="Classroom">Classroom</option>
+          <option value="Lab">Lab</option>
+          <option value="Auditorium">Auditorium</option>
+        </select>
+      </div>
+      <br />
+      <button type="submit" class="btn">Add Room</button>
+    </form>
+
+    <div class="buttons" style="margin-top: 20px;">
+      <a href="admin.html" class="btn">Back to Admin</a>
+      <a href="index.html" class="btn">Home</a>
+    </div>
+
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    document.getElementById('roomForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const roomNumber = document.getElementById('roomNumber').value;
+      const roomType = document.getElementById('roomType').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'AddRoomServlet', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      xhr.onload = function() {
+        const messageBox = document.getElementById('message');
+        messageBox.style.display = 'block';
+
+        if (xhr.status === 200) {
+          if (xhr.responseText.includes("successfully")) {
+            messageBox.className = 'message success';
+          } else {
+            messageBox.className = 'message error';
+          }
+          messageBox.innerHTML = xhr.responseText;
+        } else {
+          messageBox.className = 'message error';
+          messageBox.innerHTML = "❌ Server error!";
+        }
+      };
+
+      xhr.send(`roomNumber=${encodeURIComponent(roomNumber)}&roomType=${encodeURIComponent(roomType)}`);
+    });
+  </script>
+</body>
+</html>
